@@ -4,6 +4,7 @@ from bs4 import  BeautifulSoup
 import csv
 #import pandas as pd
 import datetime
+import time
 
 def main():
     print(__name__)
@@ -13,18 +14,20 @@ def main():
     bs = BeautifulSoup(r.content)
     if(bs.find_all("img", {"alt":"offen"})):
        o = True
+       print("Es ist offen")
     else:
        o = False
+       print("Es ist zu")
 
 if __name__== '__main__':
     if main():
        with open('spacestatus.csv', 'w', newline='') as csvfile:
            cwriter = csv.writer(csvfile, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-           cwriter.writerow(datetime.datetime(), "open")
+           cwriter.writerow((datetime.datetime.now(), "open"))
     else:
        with open('spacestatus.csv', 'w', newline='') as csvfile:
            cwriter = csv.writer(csvfile, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-           cwriter.writerow(datetime.datetime(), "closed")
-    sleep(1000)
+           cwriter.writerow((datetime.datetime.now(), "closed"))
+    time.sleep(6000)
 
 
